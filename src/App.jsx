@@ -1,31 +1,17 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-import { AllCities } from "./constants/cities";
 import Card from "./components/Card";
 import CityForm from "./components/CityForm";
 import Count from "./components/Count";
 import Post from "./components/Post";
 import UserForm from "./components/UserForm";
-import { TestContext } from "./stores/TestContext";
+import { useSelector } from "react-redux";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [posts, setPosts] = useState([]);
-  const [cities, setCities] = useState(AllCities);
-
-  const addCity = (city) => {
-    setCities([...cities, city]);
-  };
-
-  useEffect(() => {
-    if (count)
-      fetch(`https://jsonplaceholder.typicode.com/posts/${count}`)
-        .then((response) => response.json())
-        .then((data) => setPosts([...posts, data]));
-  }, [count]);
+  const cities = useSelector((state) => state.cities.value);
+  const posts = useSelector((state) => state.posts.value);
 
   return (
-    <TestContext.Provider value={{ count, setCount }}>
+    <>
       <Count></Count>
       <div className="grid grid-cols-4 gap-5 mb-5">
         {posts.map((post) => (
@@ -36,7 +22,7 @@ function App() {
             body={post.body}></Post>
         ))}
       </div>
-      <CityForm addCity={addCity}></CityForm>
+      <CityForm></CityForm>
       <div className="grid grid-cols-4 gap-5 mb-5">
         {cities
           //  .filter((city) => city.isVisited)
@@ -51,7 +37,7 @@ function App() {
           ))}
       </div>
       <UserForm></UserForm>
-    </TestContext.Provider>
+    </>
   );
 }
 

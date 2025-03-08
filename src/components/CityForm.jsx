@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { add } from "../redux/citiesSlice";
 
 const StateForm = {
   name: "",
@@ -7,7 +9,8 @@ const StateForm = {
   isVisited: false,
 };
 
-const CityForm = ({ addCity }) => {
+const CityForm = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState(StateForm);
 
   const handleSubmit = (e) => {
@@ -19,9 +22,10 @@ const CityForm = ({ addCity }) => {
       imgUrl: formData.imgUrl,
       isVisited: formData.isVisited,
     };
-    addCity(city);
 
     setFormData(StateForm);
+
+    dispatch(add(city));
   };
 
   const handleInputChange = (e) => {
