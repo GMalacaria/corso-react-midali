@@ -1,6 +1,8 @@
-import { useEffect, } from "react";
+import { useContext, useEffect } from "react";
+import { TestContext } from "../stores/TestContext";
 
-const Count = ({ count, setCount }) => {
+const Count = () => {
+  const { count, setCount } = useContext(TestContext);
 
   useEffect(() => {
     document.title = `Count = ${count}`;

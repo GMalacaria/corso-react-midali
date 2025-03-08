@@ -6,6 +6,7 @@ import CityForm from "./components/CityForm";
 import Count from "./components/Count";
 import Post from "./components/Post";
 import UserForm from "./components/UserForm";
+import { TestContext } from "./stores/TestContext";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,8 +25,8 @@ function App() {
   }, [count]);
 
   return (
-    <>
-      <Count count={count} setCount={setCount}></Count>
+    <TestContext.Provider value={{ count, setCount }}>
+      <Count></Count>
       <div className="grid grid-cols-4 gap-5 mb-5">
         {posts.map((post) => (
           <Post
@@ -50,7 +51,7 @@ function App() {
           ))}
       </div>
       <UserForm></UserForm>
-    </>
+    </TestContext.Provider>
   );
 }
 
